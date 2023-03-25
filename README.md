@@ -5,7 +5,7 @@ This repository contains the code for generating the selection summaries of the 
 
 
 ## What is the selection design?
-`selec_moca.py` script randomly selects a specified number of winners from a staked list of Moca NFT owners. The script reads data from a CSV file containing information about Moca owners, including their wallets, their Moca IDs, and the corresponding  Moca XP (experience points). It then filters the Mocas based on a minimum XP threshold and randomly selects a Moca from the remaining eligible Mocas.
+`select_moca.py` script randomly selects a specified number of winners from a staked list of Moca NFT owners. The script reads data from a CSV file containing information about Moca owners, including their wallets, their Moca IDs, and the corresponding  Moca XP (experience points). It then filters the Mocas based on a minimum XP threshold and randomly selects a Moca from the remaining eligible Mocas.
 
 
 ### Rules for selection
@@ -34,7 +34,7 @@ The script has several command line arguments that you can use to customize the 
 
 Here's an example of how to use these arguments:
 
-`python moca_wl_selection.py data/moca.csv --max_wins_per_wallet 2 --xp_threshold 8 --num_winners 5 --whitelist_name moca`
+`python select_moca.py data/moca.csv --max_wins_per_wallet 2 --xp_threshold 8 --num_winners 5 --whitelist_name moca`
 
 
 ## Project website and social media
