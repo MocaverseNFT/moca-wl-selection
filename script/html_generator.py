@@ -16,8 +16,6 @@ def generate_html(wl_name, wallets, max_wins_per_wallet, xp_threshold, num_winne
     template = env.get_template("template_summary.html")
     template_index = env.get_template("template_index.html")
 
-    print(winners)
-
     # Render the template with the selection data
     html1 = template.render(
         wl_name=wl_name,

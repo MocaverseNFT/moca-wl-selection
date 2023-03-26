@@ -3,6 +3,7 @@ import csv
 from html_generator import generate_html
 import datetime
 import argparse
+import json
 
 
 # Define the command line arguments
@@ -42,6 +43,9 @@ with open(args.csv_file, 'r') as f:
 # Initialize the wallets dictionary
 wallets = {}
 
+with open('data/moca_name.json', 'r') as f:
+    moca_mapping = json.load(f)
+
 # Loop through each row in the data and add it to the wallets dictionary
 for row in data:
     moca_id = int(row['moca_id'])
@@ -49,6 +53,7 @@ for row in data:
     moca_xp = int(row['moca_xp'])
     if wallet not in wallets:
         wallets[wallet] = []
+        moca_name = moca_mapping[str(moca_id)]['name']
     wallets[wallet].append({'id': moca_id, 'xp': moca_xp})
 
 # Convert the wallets dictionary to a list of dictionaries with 'address' and 'mocas' keys
@@ -148,10 +153,24 @@ while len(winners) < num_winners:
     winners.append({'moca_id': moca['id'], 'address': address})
     wallet_wins[address] += 1
 
+with open('data/premint_wallets.json', 'r') as f:
+    premint_wallets_ls = json.load(f)
+
+# Create a dictionary that maps each Moca ID to its premint wallet address
+moca_id_to_wallet = {moca['token_id']: moca['mint_wallet_address'] for moca in premint_wallets_ls}
+
 # Print the list of winners
 for i, winner in enumerate(winners):
     print(
         f'Winner #{i+1}: Moca #{winner["moca_id"]} owned by {winner["address"]}')
+    moca_id = winner['moca_id']
+    premint_wallet = moca_id_to_wallet.get(moca_id) # get the premint wallet address for the Moca ID
+    if premint_wallet:
+        winners[i]['address'] = premint_wallet # replace the 'address' value with the premint wallet address
+    print(
+        f'Winner #{i+1}: Moca #{winner["moca_id"]} owned by PREMINT -  {winner["address"]}')
+    moca_name = moca_mapping[str(moca_id)]['name']
+    winner['moca_name'] = moca_name
 
 
 # Define timestamp as a string containing the current date and time
