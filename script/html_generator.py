@@ -10,7 +10,7 @@ The resulting index.html file contains a list of links to each summary page.
 '''
 
 
-def generate_html(wl_name, wallets, max_wins_per_wallet, xp_threshold, num_winners, seed_phrase, winners, timestamp):
+def generate_html(wl_name, wallets, max_wins_per_wallet, stake_at_week, num_winners, seed_phrase, winners, timestamp):
     # Load the HTML template
     env = Environment(loader=FileSystemLoader("."))
     template = env.get_template("template_summary.html")
@@ -21,7 +21,7 @@ def generate_html(wl_name, wallets, max_wins_per_wallet, xp_threshold, num_winne
         wl_name=wl_name,
         wallets=wallets,
         max_wins_per_wallet=max_wins_per_wallet,
-        xp_threshold=xp_threshold,
+        stake_at_week=stake_at_week,
         num_winners=num_winners,
         seed_phrase=seed_phrase,
         winners=winners,

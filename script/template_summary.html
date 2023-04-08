@@ -1,169 +1,180 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<title>WL Selection Summary - {{ wl_name }}</title>
-		<style>
-			body {
-				font-family: 'Montserrat', sans-serif;
-				color: #fff;
-				margin: 0;
-				padding: 0;
-				background-image: url("https://www.mocaverse.xyz/static/media/background.a021621ff6a066ae70b5.jpg");
-				background-size: cover;
-				background-position: center;
-			}
+<head>
+	<title>WL Selection Summary - {{ wl_name }}</title>
+	<style>
+		body {
+			font-family: 'Montserrat', sans-serif;
+			color: #fff;
+			margin: 0;
+			padding: 0;
+			background-image: url("https://www.mocaverse.xyz/static/media/background.a021621ff6a066ae70b5.jpg");
+			background-size: cover;
+			background-position: center;
+		}
 
-			.container {
-				text-align: center;
-				max-width: 1200px;
-				margin: 0 auto;
-				padding: 20px;
-				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-				background-image: url("https://www.mocaverse.xyz/static/media/bg-floating-objects.df9fad6d5a025450e23a.svg")
-			}
+		.container {
+			text-align: center;
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 20px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			background-image: url("https://www.mocaverse.xyz/static/media/bg-floating-objects.df9fad6d5a025450e23a.svg")
+		}
 
-			.logo {
-				position: absolute;
-				left: 50%;
-				top: 20px;
-				transform: translateX(-50%);
-				z-index: 9999;
-			}
+		.logo {
+			position: absolute;
+			left: 50%;
+			top: 20px;
+			transform: translateX(-50%);
+			z-index: 9999;
+		}
 
-			h1 {
-				font-size: 36px;
-				margin-top: 100px;
-				margin-bottom: 20px;
-				color: #fff;
-				text-align: center;
+		h1 {
+			font-size: 36px;
+			margin-top: 100px;
+			margin-bottom: 20px;
+			color: #fff;
+			text-align: center;
 
-			}
+		}
 
-			h2 {
-				font-size: 24px;
-				margin-top: 30px;
-				margin-bottom: 10px;
-				color: #fff;
+		h2 {
+			font-size: 24px;
+			margin-top: 30px;
+			margin-bottom: 10px;
+			color: #fff;
 
-			}
+		}
 
-			table {
-				width: 60%;
-				border-collapse: collapse;
-				margin-bottom: 20px;
-				margin: 0 auto;
-			}
+		table {
+			width: 60%;
+			border-collapse: collapse;
+			margin-bottom: 20px;
+			margin: 0 auto;
+		}
 
-			th,
-			td {
-				padding: 5px;
-				text-align: center;
-				border-bottom: 2px solid #DDD;
-				background: #ffafff;
-				border: 1px solid #000;
-				color: #000;
-				font-family: 'Montserrat', sans-serif;
-				font-size: 16px;
-			}
+		th,
+		td {
+			padding: 5px;
+			text-align: center;
+			border-bottom: 2px solid #DDD;
+			background: #ffafff;
+			border: 1px solid #000;
+			color: #000;
+			font-family: 'Montserrat', sans-serif;
+			font-size: 16px;
+		}
 
-			th {
+		th {
 
-				background-color: #f8d748;
-				border: 2px solid #000;
-				color: #000;
-				font-weight: bold;
-			}
+			background-color: #f8d748;
+			border: 2px solid #000;
+			color: #000;
+			font-weight: bold;
+		}
 
-			ul {
-				vertical-align: top;
-				margin-right: 20px;
-				padding-left: 20px;
-			}
+		ul {
+			vertical-align: top;
+			margin-right: 20px;
+			padding-left: 20px;
+		}
 
-			li {
-				margin-bottom: 10px;
-				padding-left: 20px;
-				list-style-type: none;
-				position: relative;
-			}
+		li {
+			margin-bottom: 10px;
+			padding-left: 20px;
+			list-style-type: none;
+			position: relative;
+		}
 
-			p {
-				margin-top: 10px;
-				margin-bottom: 10px;
-			}
+		p {
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
 
-			.footer {
-				margin-top: 20px;
-				margin-bottom: 0;
-				text-align: center;
-				font-size: 14px;
-				color: #777;
-			}
-		</style>
-	</head>
+		.footer {
+			margin-top: 20px;
+			margin-bottom: 0;
+			text-align: center;
+			font-size: 14px;
+			color: #777;
+		}
+	</style>
+</head>
 
-	<body>
-		<div class="logo">
-			<img src="https://www.mocaverse.xyz/static/media/mocaverse.b07164f549a82670d9e412993152eaa9.svg"
-				alt="MocaVerse Logo">
-		</div>
-		<h1> {{ wl_name }}</h1>
+<body>
+	<div class="logo">
+		<img src="https://www.mocaverse.xyz/static/media/mocaverse.b07164f549a82670d9e412993152eaa9.svg"
+			alt="MocaVerse Logo">
+	</div>
+	<h1> {{ wl_name }}</h1>
 
-		<div class="container">
-			
-			<h2>Selection Criteria</h2>
-			<ul>
-				<li>Maximum Wins Per Wallet: {{ max_wins_per_wallet }}</li>
-				<li>XP Threshold: {{ xp_threshold }}</li>
-				<li>Number of Winners: {{ num_winners }}</li>
-				<li>Seed Phrase: {{ seed_phrase }}</li>
-			</ul>
-			<h2>Winners</h2>
-			{% if winners %}
-			<table>
-				<thead>
-					<tr>
-						<th>Wallet Address</th>
-						<th>Token ID</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for winner in winners|sort(attribute='moca_id') %}
-					<tr>
-						<td>{{ winner.address }}</td>
-						<td>#{{ winner.moca_id }} </td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-			{% else %}
-			<p>No winners were selected.</p>
-			{% endif %}
+	<div class="container">
 
-			<h2>Participated Wallets</h2>
-			<table>
-				<thead>
-					<tr>
-						<th>Address</th>
-						<th>Token ID</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for wallet in wallets|sort(attribute='mocas.0.id') %}
-					<tr>
-						<td>{{ wallet.address }}</td>
-						<td>
-							{% for moca in wallet.mocas|sort(attribute='id') %}
-							#{{ moca.id }} (XP: {{ moca.xp }})<br>
-							{% endfor %}
-						</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
+		<h2>Selection Criteria</h2>
+		<ul>
+			<li>Maximum Wins Per Wallet: {{ max_wins_per_wallet }}</li>
+			<li>Requirement: staked at week {{--stake_at_week}}</li>
+			<li>Number of Winners: {{ num_winners }}</li>
+			<li>Seed Phrase: {{ seed_phrase }}</li>
+			<li>Winner addresses are the wallet addresses that registered at Premint.  </li>
+			<li>This is not the full list of Moca XP. This only includes participants.  </li>
+		</ul>
+		<h2>Winners</h2>
+		{% if winners %}
+		<table>
+			<thead>
+				<tr>
+					<th>Wallet Address</th>
+					<th>Token ID</th>
+					<th>Moca Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for winner in winners|sort(attribute='moca_id') %}
+				<tr>
+					<td>{{ winner.address }}</td>
+					<td>#{{ winner.moca_id }} </td>
+					<td>{{ winner.moca_name }} </td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% else %}
+		<p>No winners were selected.</p>
+		{% endif %}
 
-			<p class="footer">Generated by the Moca Script on {{ timestamp }}</p>
-		</div>
-	</body>
+		<h2>Participated Wallets</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Address</th>
+					<th>Token ID</th>
+					<th>Moca Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for wallet in wallets|sort(attribute='mocas.0.id') %}
+				{% set mocas_dict = {} %}
+				{% for moca in wallet.mocas %}
+				{% set _ = mocas_dict.__setitem__(moca.id, moca.name) %}
+				{% endfor %}
+				{% for moca in wallet.mocas|sort(attribute='id') %}
+				<tr>
+					{% if loop.index == 1 %}
+					<td rowspan="{{ wallet.mocas|length }}">{{ wallet.address }}</td>
+					{% endif %}
+					<td>#{{ moca.id }} (XP: {{ moca.xp }})</td>
+					<td>{{ mocas_dict.get(moca.id, '') }}</td>
+				</tr>
+				{% endfor %}
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<p class="footer">Generated by the Moca Script on {{ timestamp }}</p>
+	</div>
+</body>
+
 </html>

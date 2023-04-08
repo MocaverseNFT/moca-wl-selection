@@ -8,11 +8,16 @@ import json
 
 # Define the command line arguments
 parser = argparse.ArgumentParser(description='Moca Whitelist Randomizer')
-parser.add_argument('csv_file', type=str, help='Path to the CSV file containing the Moca data')
-parser.add_argument('--max_wins_per_wallet', type=int, default=1, help='Maximum number of wins per wallet (default: 1)')
-parser.add_argument('--xp_threshold', type=int, default=8, help='Moca XP threshold (default: 8)')
-parser.add_argument('--num_winners', type=int, default=10, help='Number of winners to select (default: 10)')
-parser.add_argument('--whitelist_name', type=str, default='moca', help='Whitelist name (default: "moca")')
+parser.add_argument('csv_file', type=str,
+                    help='Path to the CSV file containing the Moca data')
+parser.add_argument('--max_wins_per_wallet', type=int, default=1,
+                    help='Maximum number of wins per wallet (default: 1)')
+parser.add_argument('--stake_at_week', type=int, default=1,
+                    help='Week number moca has to be staked to join (default: 1)')
+parser.add_argument('--num_winners', type=int, default=10,
+                    help='Number of winners to select (default: 10)')
+parser.add_argument('--whitelist_name', type=str,
+                    default='moca', help='Whitelist name (default: "moca")')
 # parser.add_argument('--blockhash', type=str, default='0x5dd66b23e557843a06b4860b36a33864b840edff79d8c52e9d11c1f84e3c2429', help='Blockhash for the randomization (default: "0x5dd66b23e557843a06b4860b36a33864b840edff79d8c52e9d11c1f84e3c2429")')
 args = parser.parse_args()
 
@@ -20,19 +25,17 @@ args = parser.parse_args()
 num_winners = args.num_winners
 wl_name = args.whitelist_name
 max_wins_per_wallet = args.max_wins_per_wallet
-xp_threshold = args.xp_threshold
 
-# #TODO add function call to get block number and block hash with timestamp
+# TODO fix case if stake_at_week is last week, calculate the week number from timestamp
+stake_at_week = args.stake_at_week
+
+# TODO add function call to get block number and block hash with timestamp
 # # Define the blockhash for the randomization
-# # blocknumber: etherscan.io/block/16897664
+# # blocknumber: etherscan.io/block/16947336
 # blockhash = args.blockhash
 
-# num_winners = 5
-# wl_name = 'club3'
-# max_wins_per_wallet = 1
-# xp_threshold = 16
-blockhash='0x5dd66b23e557843a06b4860b36a33864b840edff79d8c52e9d11c1f84e3c2429'
 
+blockhash = '0xaf45a04a30cf7513398dfc2e60cb0e2d022dd8b292de4b5990dcc6a323e7697f'
 
 
 # Read the CSV file and create a list of dictionaries
@@ -43,7 +46,7 @@ with open(args.csv_file, 'r') as f:
 # Initialize the wallets dictionary
 wallets = {}
 
-with open('data/moca_name.json', 'r') as f:
+with open('data/moca_name_mapping.json', 'r') as f:
     moca_mapping = json.load(f)
 
 # Loop through each row in the data and add it to the wallets dictionary
@@ -51,14 +54,18 @@ for row in data:
     moca_id = int(row['moca_id'])
     wallet = row['wallet']
     moca_xp = int(row['moca_xp'])
+    week = int(row['week'])
+    moca_name = next((item['moca_name']
+                     for item in moca_mapping if item['token_id'] == str(moca_id)), None)
     if wallet not in wallets:
         wallets[wallet] = []
-        moca_name = moca_mapping[str(moca_id)]['name']
-    wallets[wallet].append({'id': moca_id, 'xp': moca_xp})
+    wallets[wallet].append({'id': moca_id, 'xp': moca_xp, 'name': moca_name, 'week':week})
+
 
 # Convert the wallets dictionary to a list of dictionaries with 'address' and 'mocas' keys
 wallets = [{'address': wallet, 'mocas': mocas}
            for wallet, mocas in wallets.items()]
+
 
 # Check for duplicate wallets
 if len(set(wallet['address'] for wallet in wallets)) != len(wallets):
@@ -96,7 +103,7 @@ for wallet in wallets:
     mocas = wallet['mocas']
 
     # Remove Mocas that have XP below the threshold
-    mocas = [moca for moca in mocas if moca['xp'] >= xp_threshold]
+    mocas = [moca for moca in mocas if moca['week'] == stake_at_week]
 
     # Add the remaining Mocas to the list of eligible Mocas
     eligible_mocas.extend(mocas)
@@ -153,23 +160,23 @@ while len(winners) < num_winners:
     winners.append({'moca_id': moca['id'], 'address': address})
     wallet_wins[address] += 1
 
-with open('data/premint_wallets.json', 'r') as f:
-    premint_wallets_ls = json.load(f)
+# with open('data/premint_wallets.json', 'r') as f:
+    # premint_wallets_ls = json.load(f)
 
 # Create a dictionary that maps each Moca ID to its premint wallet address
-moca_id_to_wallet = {moca['token_id']: moca['mint_wallet_address'] for moca in premint_wallets_ls}
+# moca_id_to_wallet = {moca['token_id']: moca['mint_wallet_address'] for moca in premint_wallets_ls}
 
 # Print the list of winners
 for i, winner in enumerate(winners):
     print(
         f'Winner #{i+1}: Moca #{winner["moca_id"]} owned by {winner["address"]}')
     moca_id = winner['moca_id']
-    premint_wallet = moca_id_to_wallet.get(moca_id) # get the premint wallet address for the Moca ID
-    if premint_wallet:
-        winners[i]['address'] = premint_wallet # replace the 'address' value with the premint wallet address
-    print(
-        f'Winner #{i+1}: Moca #{winner["moca_id"]} owned by PREMINT -  {winner["address"]}')
-    moca_name = moca_mapping[str(moca_id)]['name']
+    # premint_wallet = moca_id_to_wallet.get(moca_id) # get the premint wallet address for the Moca ID
+    # if premint_wallet:
+    #     winners[i]['address'] = premint_wallet # replace the 'address' value with the premint wallet address
+    # print(
+    #     f'Winner #{i+1}: Moca #{winner["moca_id"]} owned by PREMINT -  {winner["address"]}')
+    moca_name = moca_mapping[moca_id]['moca_name']
     winner['moca_name'] = moca_name
 
 
@@ -177,4 +184,5 @@ for i, winner in enumerate(winners):
 timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 # Generate the HTML files
-generate_html(wl_name, wallets,max_wins_per_wallet, xp_threshold, num_winners, seed_phrase, winners, timestamp)
+generate_html(wl_name, wallets, max_wins_per_wallet, stake_at_week,
+              num_winners, seed_phrase, winners, timestamp)
