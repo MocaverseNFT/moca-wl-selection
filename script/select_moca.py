@@ -4,6 +4,7 @@ from html_generator import generate_html
 import datetime
 import argparse
 import json
+from get_block import get_block_hash_by_timestamp
 
 
 # Define the command line arguments
@@ -18,7 +19,7 @@ parser.add_argument('--num_winners', type=int, default=10,
                     help='Number of winners to select (default: 10)')
 parser.add_argument('--whitelist_name', type=str,
                     default='moca', help='Whitelist name (default: "moca")')
-# parser.add_argument('--blockhash', type=str, default='0x5dd66b23e557843a06b4860b36a33864b840edff79d8c52e9d11c1f84e3c2429', help='Blockhash for the randomization (default: "0x5dd66b23e557843a06b4860b36a33864b840edff79d8c52e9d11c1f84e3c2429")')
+parser.add_argument('--date', type=str, default='2023-03-24', help='Timestamo to get Blockhash for the randomization (default: "2023-03-24")')
 args = parser.parse_args()
 
 # Define the required number of winners
@@ -30,14 +31,15 @@ max_wins_per_wallet = args.max_wins_per_wallet
 stake_at_week = args.stake_at_week
 
 # TODO add function call to get block number and block hash with timestamp
-# # Define the blockhash for the randomization
-# # blocknumber: etherscan.io/block/16947336
-# blockhash = args.blockhash
-
-blockhash = '0xaf45a04a30cf7513398dfc2e60cb0e2d022dd8b292de4b5990dcc6a323e7697f'
+# Define the blockhash for the randomization
+date = args.date
+timestamp = f'{date} 13:00:00Z'
+blockhash =  get_block_hash_by_timestamp(timestamp)
+print(f'Get block hash by timestamp {timestamp}, blockhash is {blockhash}')
 
 # Define the seed phrase for the randomization
 seed_phrase = wl_name + blockhash
+print(f'Seed Phrase is {seed_phrase}')
 
 # Read the CSV file and create a list of dictionaries
 with open(args.csv_file, 'r') as f:
