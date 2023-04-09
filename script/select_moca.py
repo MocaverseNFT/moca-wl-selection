@@ -26,8 +26,8 @@ num_winners = args.num_winners
 wl_name = args.whitelist_name
 max_wins_per_wallet = args.max_wins_per_wallet
 
-# TODO fix case if stake_at_week is last week, calculate the week number from timestamp
-stake_at_week = args.stake_at_week
+# # TODO fix case if stake_at_week is last week, calculate the week number from timestamp
+# stake_at_week = args.stake_at_week
 
 # TODO add function call to get block number and block hash with timestamp
 # # Define the blockhash for the randomization
@@ -54,12 +54,12 @@ for row in data:
     moca_id = int(row['moca_id'])
     wallet = row['wallet']
     moca_xp = int(row['moca_xp'])
-    week = int(row['week'])
+    #week = int(row['week'])
     moca_name = next((item['moca_name']
                      for item in moca_mapping if item['token_id'] == str(moca_id)), None)
     if wallet not in wallets:
         wallets[wallet] = []
-    wallets[wallet].append({'id': moca_id, 'xp': moca_xp, 'name': moca_name, 'week':week})
+    wallets[wallet].append({'id': moca_id, 'xp': moca_xp, 'name': moca_name})
 
 
 # Convert the wallets dictionary to a list of dictionaries with 'address' and 'mocas' keys
@@ -102,8 +102,8 @@ for wallet in wallets:
     # Get the list of Mocas for this wallet
     mocas = wallet['mocas']
 
-    # Remove Mocas that have XP below the threshold
-    mocas = [moca for moca in mocas if moca['week'] == stake_at_week]
+    # # Remove Mocas that have XP below the threshold
+    # mocas = [moca for moca in mocas if moca['week'] == stake_at_week]
 
     # Add the remaining Mocas to the list of eligible Mocas
     eligible_mocas.extend(mocas)
@@ -184,5 +184,5 @@ for i, winner in enumerate(winners):
 timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 # Generate the HTML files
-generate_html(wl_name, wallets, max_wins_per_wallet, stake_at_week,
+generate_html(wl_name, wallets, max_wins_per_wallet,
               num_winners, seed_phrase, winners, timestamp)
