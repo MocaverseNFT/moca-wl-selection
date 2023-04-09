@@ -19,7 +19,7 @@ parser.add_argument('--num_winners', type=int, default=10,
                     help='Number of winners to select (default: 10)')
 parser.add_argument('--whitelist_name', type=str,
                     default='moca', help='Whitelist name (default: "moca")')
-parser.add_argument('--date', type=str, default='2023-03-24', help='Timestamo to get Blockhash for the randomization (default: "2023-03-24")')
+parser.add_argument('--date', type=str, default='2023-03-24', help='Timestamp to get Blockhash for the randomization (default: "2023-03-24")')
 args = parser.parse_args()
 
 # Define the required number of winners

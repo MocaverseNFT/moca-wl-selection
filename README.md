@@ -22,24 +22,32 @@ The script also has several optional arguments that allow you to customize the s
 
 After selecting the winners, the script generates HTML files containing the details of the winners and saves them in a directory named after the whitelist.
 
-
 The script has several command line arguments that you can use to customize the selection process. Here are the arguments:
 
 - csv_file: The path to the CSV file containing the Moca data (required).
 - --max_wins_per_wallet: The maximum number of wins per wallet (default: 1).
-- --xp_threshold: The Moca XP threshold (default: 8).
+- --stake_at_week: Week number moca has to be staked to join (default: 1).
 - --num_winners: The number of winners to select (default: 10).
 - --whitelist_name: The whitelist name (default: "moca").
+- --date: Timestamp to get Blockhash for the randomization (default: "2023-03-24").
 
+The script will call Moralis to get the block hash of the closest block given the date. You need to supplement a moralis key in a `.env` file with:
+`MORALIS_API_KEY=<your-api-key>`
 
 Here's an example of how to use these arguments:
 
-`python select_moca.py data/moca.csv --max_wins_per_wallet 2 --xp_threshold 8 --num_winners 5 --whitelist_name moca`
+`python select_moca.py data/moca_data_test.csv --max_wins_per_wallet 2 --stake_at_week1 --num_winners 5 --whitelist_name moca`
+
+Check `script/data/moca_data_test.csv` for how the data should look like. 
 
 
 ## Project website and social media
 
-To learn more about MocaVerse and its NFT drops, please visit our website:
+To Check your Moca XP, please visit our leaderboard:
+
+https://www.mocaverse.xyz/mocana
+
+To learn more about Mocaverse and its NFT drops, please visit our website:
 
 https://www.mocaverse.xyz/
 
