@@ -18,18 +18,18 @@ This repository contains the code for generating the selection summaries of the 
 
 ### How to use?
 
-The script also has several optional arguments that allow you to customize the selection process. For example, you can specify the maximum number of wins per wallet, the XP threshold, the number of winners to select, and the name of the whitelist.
+The script also has several optional arguments that allow you to customize the selection process. For example, you can specify the maximum number of wins per wallet, the staked week, the number of winners to select, and the name of the whitelist.
 
 After selecting the winners, the script generates HTML files containing the details of the winners and saves them in a directory named after the whitelist.
 
 The script has several command line arguments that you can use to customize the selection process. Here are the arguments:
 
 - csv_file: The path to the CSV file containing the Moca data (required).
-- --max_wins_per_wallet: The maximum number of wins per wallet (default: 1).
-- --stake_at_week: Week number moca has to be staked to join (default: 1).
-- --num_winners: The number of winners to select (default: 10).
-- --whitelist_name: The whitelist name (default: "moca").
-- --date: Timestamp to get Blockhash for the randomization (default: "2023-03-24").
+- `--max_wins_per_wallet`: The maximum number of wins per wallet (default: 1).
+- `--stake_at_week`: Week number moca has to be staked to join (default: 1).
+- `--num_winners`: The number of winners to select (default: 10).
+- `--whitelist_name`: The whitelist name (default: "moca").
+- `--date`: Timestamp to get Blockhash for the randomization (default: "2023-03-24").
 
 The script will call Moralis to get the block hash of the closest block given the date. You need to supplement a moralis key in a `.env` file with:
 `MORALIS_API_KEY=<your-api-key>`
