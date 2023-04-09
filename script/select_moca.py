@@ -30,7 +30,6 @@ max_wins_per_wallet = args.max_wins_per_wallet
 # TODO fix case if stake_at_week is last week, calculate the week number from timestamp
 stake_at_week = args.stake_at_week
 
-# TODO add function call to get block number and block hash with timestamp
 # Define the blockhash for the randomization
 date = args.date
 timestamp = f'{date} 13:00:00Z'
