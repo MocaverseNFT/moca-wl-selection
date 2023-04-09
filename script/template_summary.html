@@ -79,6 +79,7 @@
 			vertical-align: top;
 			margin-right: 20px;
 			padding-left: 20px;
+			font-size: 16px;
 		}
 
 		li {
@@ -115,12 +116,12 @@
 		<h2>Selection Criteria</h2>
 		<ul>
 			<li>Maximum Wins Per Wallet: {{ max_wins_per_wallet }}</li>
-			<li>Requirement: staked at week 2</li>
+			<li>Requirement: staked at week {{stake_at_week}}</li>
 			<li>Number of Winners: {{ num_winners }}</li>
-			<li>Seed Phrase: {{ seed_phrase }}</li>
 			<li>Winner addresses are the wallet addresses that registered at Premint.  </li>
 			<li>This is not the full list of Moca XP. This only includes participants.  </li>
 		</ul>
+		<p class="footer">Seed Phrase: {{ seed_phrase }}</p>
 		<h2>Winners</h2>
 		{% if winners %}
 		<table>
