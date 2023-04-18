@@ -56,7 +56,7 @@ eligible_mocas = []
 for row in data:
     moca_id = int(row['moca_id'])
     wallet = row['wallet']
-    moca_xp = int(row['moca_xp'])
+    moca_xp = float(row['moca_xp'])
     week = int(row['week'])
     moca_name = next((item['moca_name']
                      for item in moca_mapping if item['token_id'] == str(moca_id)), None)
@@ -108,14 +108,14 @@ while len(winners) < num_winners:
     random.shuffle(wallets)
 
     # Compute the total weight of the Mocas
-    total_weight = sum(moca['xp'] for moca in eligible_mocas)
+    total_weight = sum(moca['xp']*10 for moca in eligible_mocas)
 
     # Check if the total weight is zero
     if total_weight == 0:
         continue
 
     # Define the weights for each Moca
-    weights = [moca['xp'] / total_weight for moca in eligible_mocas]
+    weights = [int(moca['xp']*10) / total_weight for moca in eligible_mocas]
 
     # Randomly select a Moca based on the weights
     moca = random.choices(eligible_mocas, weights=weights)[0]
