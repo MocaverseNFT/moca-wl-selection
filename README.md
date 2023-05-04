@@ -36,7 +36,7 @@ The script will call Moralis to get the block hash of the closest block given th
 
 Here's an example of how to use these arguments:
 
-`python select_moca.py data/moca_data_test.csv --max_wins_per_wallet 2 --stake_at_week1 --num_winners 5 --whitelist_name moca`
+`python select_moca.py data/moca_data_test.csv --max_wins_per_wallet 2 --stake_at_week1 --num_winners 5 --whitelist_name moca --date 2023-04-24`
 
 Check `script/data/moca_data_test.csv` for how the data should look like. 
 
