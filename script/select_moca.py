@@ -100,9 +100,9 @@ while len(winners) < num_winners:
     num_eligible_mocas = len(eligible_mocas)
 
     # Raise an error if there are not enough eligible Mocas to choose from
-    if num_eligible_mocas < num_winners:
-        raise ValueError(
-            f'There are not enough eligible Mocas to choose from. Found {num_eligible_mocas} eligible Mocas, but need {num_winners}.')
+    #if num_eligible_mocas < num_winners:
+    #    raise ValueError(
+    #        f'There are not enough eligible Mocas to choose from. Found {num_eligible_mocas} eligible Mocas, but need {num_winners}.')
 
     # Shuffle the wallets list to randomize the order
     random.shuffle(wallets)
@@ -144,6 +144,8 @@ while len(winners) < num_winners:
     # Add the Moca and wallet to the winners list
     winners.append({'moca_id': moca['id'], 'address': address})
     wallet_wins[address] += 1
+
+print(winners)
 
 # Print the list of winners
 for i, winner in enumerate(winners):
